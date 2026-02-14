@@ -1,31 +1,57 @@
 package pages;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 
+/**
+ * PageObject für die Login-Seite
+ */
 public class LoginPage extends BasePage {
 
-        private By username = By.id("username");
-        private By password = By.id("password");
-        private By loginButton = By.cssSelector("button[type=submit]");
-        private By flashMessage = By.id("flash");
+    private By usernameField = By.id("username");
+    private By passwordField = By.id("password");
+    private By loginButton = By.cssSelector("button[type='submit']");
+    private By flashMessage = By.id("flash");
 
-        public LoginPage(WebDriver driver){
-            super(driver);
-        }
+    public LoginPage(WebDriver driver) {
+        super(driver);
+    }
 
-        public void open(){
-            driver.get("https://the-internet.herokuapp.com/login");
-        }
+    /**
+     * Öffnet die Login-Seite
+     */
+    public void open() {
+        driver.get("https://the-internet.herokuapp.com/login");
+    }
 
-        public void login(String user, String pass){
-            type(username, user);
-            type(password, pass);
-            click(loginButton);
-        }
+    /**
+     * Loggt den User ein und gibt die SecurePage zurück
+     */
+    public SecurePage login(String username, String password) {
+        type(usernameField, username);
+        type(passwordField, password);
+        click(loginButton);
+        return new SecurePage(driver);
+    }
 
-        public String getFlashMessage(){
-            return getText(flashMessage);
-        }
+    /**
+     * Holt FlashMessage Text
+     */
+    public String getFlashMessage() {
+        return getText(flashMessage);
+    }
 
+    /**
+     * Prüft, ob Login-Seite korrekt geladen ist
+     */
+    public boolean isLoaded() {
+        return waitForVisible(loginButton).isDisplayed();
+    }
+
+    /**
+     * Prüft, ob aktuelle URL zur Login-Seite gehört
+     */
+    public boolean isAt() {
+        return isUrlContains("/login");
+    }
 }
