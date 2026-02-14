@@ -3,6 +3,8 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -17,19 +19,26 @@ public class BasePage {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
+    protected WebElement waitForVisible(By locator){
+        return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+    }
+
+    protected WebElement waitForClickable(By locator){
+        return wait.until(ExpectedConditions.elementToBeClickable(locator));
+    }
+
     protected void click(By locator){
-        wait.until(driver -> driver.findElement(locator).isDisplayed());
-        driver.findElement(locator).click();
+        waitForClickable(locator).click();
     }
 
     protected void type(By locator, String text){
-        wait.until(driver -> driver.findElement(locator).isDisplayed());
-        driver.findElement(locator).sendKeys(text);
+       WebElement element = waitForVisible(locator);
+       element.clear();
+       element.sendKeys(text);
     }
 
     protected String getText(By locator){
-        wait.until(driver -> driver.findElement(locator).isDisplayed());
-        return driver.findElement(locator).getText();
+        return waitForClickable(locator).getText();
     }
 
 }

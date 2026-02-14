@@ -1,19 +1,14 @@
 package tests;
 
 import base.BaseTest;
-import net.bytebuddy.asm.MemberSubstitution;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.LoginPage;
 import pages.SecurePage;
-import pages.BasePage;
 import testdata.TestData;
 
-public class LoginTest extends BaseTest {
+public class AuthenticationTest extends BaseTest {
 
-    private static final Logger log = LoggerFactory.getLogger(LoginTest.class);
 
     @Test
     public void loginWithInvalidCredentials(){
