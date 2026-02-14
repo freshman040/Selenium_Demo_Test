@@ -38,7 +38,7 @@ public class BasePage {
     }
 
     protected String getText(By locator){
-        return waitForClickable(locator).getText();
+        return waitForVisible(locator).getText();
     }
 
 }

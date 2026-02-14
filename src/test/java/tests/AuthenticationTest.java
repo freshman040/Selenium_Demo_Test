@@ -31,7 +31,14 @@ public class AuthenticationTest extends BaseTest {
         loginPage.login(TestData.VALID_USERNAME, TestData.VALID_PASSWORD);
 
         loginPage.getFlashMessage();
-        Assert.assertTrue(driver.getCurrentUrl().contains("/secure"));
+
+        String currentUrl = driver.getCurrentUrl();
+        Assert.assertTrue(
+                currentUrl != null && currentUrl.contains("/secure"),
+                "User is not on secure page. Current URL: " + currentUrl
+        );
+
+
     }
 
 
@@ -48,14 +55,15 @@ public class AuthenticationTest extends BaseTest {
         SecurePage securePage = new SecurePage(driver);
         securePage.clickLogout();
 
+        // 1.Erst die URL prüfen (wir sollten zurück auf login sein)
+        Assert.assertTrue(driver.getCurrentUrl().contains("/login"), "Logout did not redirect to login page.");
 
-        loginPage.getFlashMessage();
+
         String message = loginPage.getFlashMessage();
         Assert.assertTrue(message.contains("You logged out of the secure area!"));
 
         String currentUrl = driver.getCurrentUrl();
 
-        loginPage.getFlashMessage();
         Assert.assertTrue(currentUrl.contains("/login"));
 
 
