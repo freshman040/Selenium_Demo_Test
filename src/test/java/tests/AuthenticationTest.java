@@ -52,10 +52,13 @@ public class AuthenticationTest extends BaseTest {
         LoginPage loginPageAfterLogout = securePage.clickLogout();
 
         Assert.assertTrue(loginPageAfterLogout.isLoaded(), "Login page not loaded after logout");
-        Assert.assertTrue(loginPageAfterLogout.isAt(), "User is not on /login page after logout");
 
         System.out.println("Aktuelle URL:" + driver.getCurrentUrl());
         System.out.println("Seitenquelltext:" + driver.getPageSource());
+
+        Assert.assertTrue(loginPageAfterLogout.isAt(), "User is not on /login page after logout");
+
+
 
         String message = loginPageAfterLogout.getFlashMessage();
         Assert.assertTrue(
