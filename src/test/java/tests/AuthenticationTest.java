@@ -54,6 +54,9 @@ public class AuthenticationTest extends BaseTest {
         Assert.assertTrue(loginPageAfterLogout.isLoaded(), "Login page not loaded after logout");
         Assert.assertTrue(loginPageAfterLogout.isAt(), "User is not on /login page after logout");
 
+        System.out.println("Aktuelle URL:" + driver.getCurrentUrl());
+        System.out.println("Seitenquelltext:" + driver.getPageSource());
+
         String message = loginPageAfterLogout.getFlashMessage();
         Assert.assertTrue(
                 message.contains("You logged out of the secure area!"),
